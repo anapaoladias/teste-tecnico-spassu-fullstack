@@ -1,0 +1,13 @@
+### Comandos utilizados para criação do front
+
+```
+npm install -g @angular/cli
+ng new biblioteca --defaults
+cd biblioteca
+ng generate component components/livro --standalone
+ng generate component components/autor --standalone
+ng generate component components/assunto --standalone
+ng generate service services/livro
+ng generate service services/autor
+ng generate service services/assunto
+```
