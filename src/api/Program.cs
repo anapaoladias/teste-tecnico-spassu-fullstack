@@ -20,6 +20,17 @@ builder.Services.AddDbContext<DefaultContext>(options =>
     )
 );
 
+// CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 // FluentValidation - Registra todos validators existentes no projeto
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 // FluentValidation - Aplica de forma automatica nas controllers (ModelState.IsValid)
@@ -43,11 +54,14 @@ app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.MapControllers();
 
-// aplica as migrations no startup da Api
+// Aplica as migrations no startup da Api
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<DefaultContext>();
     await db.Database.MigrateAsync();
 }
+
+// Habilita CORS para todas as origens
+app.UseCors("AllowAll");
 
 app.Run();
