@@ -9,10 +9,10 @@
         public string AnoPublicacao { get; set; }
         public decimal Valor { get; set; }
 
-        public string Assunto { get; set; }
-        public string Autor { get; set; }
+        public List<AssuntoResponse> Assuntos { get; set; }
+        public List<AutorResponse> Autores { get; set; }
 
-        public LivroResponse(int codigo, string titulo, string editora, int edicao, string anoPublicacao, decimal valor, string assunto, string autor)
+        public LivroResponse(int codigo, string titulo, string editora, int edicao, string anoPublicacao, decimal valor)
         {
             Codigo = codigo;
             Titulo = titulo;
@@ -20,9 +20,6 @@
             Edicao = edicao;
             AnoPublicacao = anoPublicacao;
             Valor = valor;
-
-            Assunto = assunto;
-            Autor = autor;
         }
     }
 }

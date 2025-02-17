@@ -5,7 +5,7 @@ namespace TesteTecFullstackAngular.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AutorController : ControllerBase
+    public class LivrosController : ControllerBase
     {
     }
 }

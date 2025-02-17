@@ -6,17 +6,17 @@ namespace TesteTecFullstackAngular.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AssuntoController : ControllerBase
+    public class AssuntosController : ControllerBase
     {
         private readonly IBibliotecaService _bibliotecaService;
 
-        public AssuntoController(IBibliotecaService bibliotecaService)
+        public AssuntosController(IBibliotecaService bibliotecaService)
         {
             _bibliotecaService = bibliotecaService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<AssuntoResponse>>> ObterLista(int codigo, CancellationToken cancellationToken)
+        public async Task<ActionResult<List<AssuntoResponse>>> ObterLista(CancellationToken cancellationToken)
         {
             return await _bibliotecaService.ObterListaAssuntos(cancellationToken);
         }
