@@ -8,6 +8,8 @@ namespace TesteTecFullstackAngular.Api.Infra.ORM.Mapping
     {
         public void Configure(EntityTypeBuilder<Assunto> builder)
         {
+            builder.ToTable("Assunto");
+
             builder.HasKey(a => a.CodAs);
 
             builder.Property(l => l.CodAs)

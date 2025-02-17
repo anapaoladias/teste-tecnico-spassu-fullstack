@@ -8,6 +8,8 @@ namespace TesteTecFullstackAngular.Api.Infra.ORM.Mapping
     {
         public void Configure(EntityTypeBuilder<Livro> builder)
         {
+            builder.ToTable("Livro");
+
             builder.HasKey(l => l.Codl);
 
             builder.Property(l => l.Codl)
@@ -30,6 +32,10 @@ namespace TesteTecFullstackAngular.Api.Infra.ORM.Mapping
 
             builder.Property(l => l.AnoPublicacao)
                 .HasColumnType("VARCHAR(4)")
+                .IsRequired();
+
+            builder.Property(l => l.Valor)
+                .HasColumnType("DECIMAL(18,2)")
                 .IsRequired();
         }
     }
