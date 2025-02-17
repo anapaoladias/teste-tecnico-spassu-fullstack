@@ -18,7 +18,7 @@ namespace TesteTecFullstackAngular.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<List<AssuntoResponse>>> ObterLista(int codigo, CancellationToken cancellationToken)
         {
-            return await _bibliotecaService.ObterLista(cancellationToken);
+            return await _bibliotecaService.ObterListaAssuntos(cancellationToken);
         }
 
         [HttpGet("{codigo}")]

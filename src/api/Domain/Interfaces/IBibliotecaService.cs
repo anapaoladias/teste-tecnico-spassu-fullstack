@@ -6,7 +6,7 @@ namespace TesteTecFullstackAngular.Api.Domain.Interfaces
     {
         #region Assuntos
         
-        Task<List<AssuntoResponse>> ObterLista(CancellationToken cancellationToken = default);
+        Task<List<AssuntoResponse>> ObterListaAssuntos(CancellationToken cancellationToken = default);
         Task<AssuntoResponse> ObterAssunto(int codigo, CancellationToken cancellationToken = default);
         Task<AssuntoResponse> CriarAssunto(AssuntoRequest request, CancellationToken cancellationToken = default);
         Task<AssuntoResponse> AlterarAssunto(int codigo, AssuntoRequest request, CancellationToken cancellationToken = default);

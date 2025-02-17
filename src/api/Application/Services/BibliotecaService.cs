@@ -15,7 +15,9 @@ namespace TesteTecFullstackAngular.Api.Application.Services
             _context = context;
         }
 
-        public async Task<List<AssuntoResponse>> ObterLista(CancellationToken cancellationToken = default)
+        #region Assuntos
+
+        public async Task<List<AssuntoResponse>> ObterListaAssuntos(CancellationToken cancellationToken = default)
         {
             var registros = await _context.Assuntos.ToListAsync(cancellationToken);
 
@@ -68,5 +70,7 @@ namespace TesteTecFullstackAngular.Api.Application.Services
             _context.Assuntos.Remove(registro);
             await _context.SaveChangesAsync(cancellationToken);
         }
+
+        #endregion
     }
 }
