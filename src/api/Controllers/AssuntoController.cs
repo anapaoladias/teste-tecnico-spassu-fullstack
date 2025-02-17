@@ -30,6 +30,9 @@ namespace TesteTecFullstackAngular.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Criar([FromBody] AssuntoRequest request, CancellationToken cancellationToken)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var retorno = await _bibliotecaService.CriarAssunto(request, cancellationToken);
 
             // retorno 201 - criado + url para fazer o GET + registro

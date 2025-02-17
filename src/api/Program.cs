@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using TesteTecFullstackAngular.Api.Core;
 using TesteTecFullstackAngular.Api.Infra;
@@ -17,6 +19,11 @@ builder.Services.AddDbContext<DefaultContext>(options =>
         b => b.MigrationsAssembly("TesteTecFullstackAngular.Api")
     )
 );
+
+// FluentValidation - Registra todos validators existentes no projeto
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+// FluentValidation - Aplica de forma automatica nas controllers (ModelState.IsValid)
+builder.Services.AddFluentValidationAutoValidation();
 
 // Dependencias no projeto
 builder.AddDependencies();

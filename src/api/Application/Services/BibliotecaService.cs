@@ -35,6 +35,10 @@ namespace TesteTecFullstackAngular.Api.Application.Services
 
         public async Task<AssuntoResponse> CriarAssunto(AssuntoRequest request, CancellationToken cancellationToken = default)
         {
+            var registro = await _context.Assuntos.FirstOrDefaultAsync(q => q.Descricao.Trim().ToUpper() == request.Descricao.Trim().ToUpper(), cancellationToken);
+            if (registro != null)
+                throw new BusinessException("Assunto já cadastrado!", "ASSUNTO_DUPLICADO", StatusCodes.Status400BadRequest);
+
             var entidade = new Domain.Entities.Assunto
             {
                 Descricao = request.Descricao
