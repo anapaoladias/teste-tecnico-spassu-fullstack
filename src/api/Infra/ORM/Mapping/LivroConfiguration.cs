@@ -37,6 +37,14 @@ namespace TesteTecFullstackAngular.Api.Infra.ORM.Mapping
             builder.Property(l => l.Valor)
                 .HasColumnType("DECIMAL(18,2)")
                 .IsRequired();
+
+            builder.HasMany(e => e.LivroAutores)
+              .WithOne(e => e.Livro)
+              .HasForeignKey(e => e.Livro_CodI);
+
+            builder.HasMany(e => e.LivroAssuntos)
+              .WithOne(e => e.Livro)
+              .HasForeignKey(e => e.Livro_CodI);
         }
     }
 }

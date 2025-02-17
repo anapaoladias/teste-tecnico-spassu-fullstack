@@ -28,8 +28,8 @@ namespace TesteTecFullstackAngular.Api.Domain.Interfaces
 
         Task<List<LivroResponse>> ObterListaLivros(CancellationToken cancellationToken = default);
         Task<LivroResponse> ObterLivro(int codigo, CancellationToken cancellationToken = default);
-        Task<LivroResponse> CriarLivro(LivroRequest request, CancellationToken cancellationToken = default);
-        Task<LivroResponse> AlterarLivro(int codigo, LivroRequest request, CancellationToken cancellationToken = default);
+        Task<int> CriarLivro(LivroRequest request, CancellationToken cancellationToken = default);
+        Task<int> AlterarLivro(int codigo, LivroRequest request, CancellationToken cancellationToken = default);
         Task ExcluirLivro(int codigo, CancellationToken cancellationToken = default);
 
         #endregion

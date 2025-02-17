@@ -10,8 +10,8 @@ namespace TesteTecFullstackAngular.Api.Application.ViewModels
         public string AnoPublicacao { get; set; }
         public decimal Valor { get; set; }
 
-        public int CodigoAssunto { get; set; }
-        public int CodigoAutor { get; set; }
+        public List<int> CodigosAssuntos { get; set; }
+        public List<int> CodigosAutores { get; set; }
     }
 
     public class LivroRequestValidator : AbstractValidator<LivroRequest>
@@ -35,11 +35,11 @@ namespace TesteTecFullstackAngular.Api.Application.ViewModels
             RuleFor(x => x.Valor)
                 .GreaterThan(0).WithMessage("O valor deve ser maior que zero.");
 
-            RuleFor(x => x.CodigoAssunto)
-                .GreaterThan(0).WithMessage("O Assunto deve ser informado.");
+            RuleFor(x => x.CodigosAssuntos)
+                .NotEmpty().WithMessage("Informe o Assunto");
 
-            RuleFor(x => x.CodigoAutor)
-                .GreaterThan(0).WithMessage("O Autor deve ser informado.");
+            RuleFor(x => x.CodigosAutores)
+                .NotEmpty().WithMessage("Informe os Autores");
         }
     }
 }

@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Win32;
-using System.Drawing;
 using TesteTecFullstackAngular.Api.Application.ViewModels;
 using TesteTecFullstackAngular.Api.Core;
+using TesteTecFullstackAngular.Api.Domain.Entities;
 using TesteTecFullstackAngular.Api.Domain.Interfaces;
 using TesteTecFullstackAngular.Api.Infra.ORM;
 
@@ -154,65 +153,123 @@ namespace TesteTecFullstackAngular.Api.Application.Services
         public async Task<List<LivroResponse>> ObterListaLivros(CancellationToken cancellationToken = default)
         {
             var registros = await _context.Livros
-                .Include("LivroAutores.Livro")
-                .Include("LivroAssunto.Assunto")
+                .Include(i => i.LivroAssuntos).ThenInclude(i => i.Assunto)
+                .Include(i => i.LivroAutores).ThenInclude(i => i.Autor)
                 .ToListAsync(cancellationToken);
 
-            var retorno = registros
-                .Select(q => new LivroResponse(q.Codl, q.Titulo, q.Editora, q.Edicao, q.AnoPublicacao, q.Valor))
-                .ToList();
+            var retorno = new List<LivroResponse>();
+
+            foreach(var r in registros)
+            {
+                var livro = new LivroResponse(r.Codl, r.Titulo, r.Editora, r.Edicao, r.AnoPublicacao, r.Valor);
+
+                livro.Autores = r.LivroAutores.Select(q => new AutorResponse(q.Autor.CodAu, q.Autor.Nome)).ToList();
+                livro.Assuntos = r.LivroAssuntos.Select(q => new AssuntoResponse(q.Assunto.CodAs, q.Assunto.Descricao)).ToList();
+
+                retorno.Add(livro);
+            }
 
             return retorno;
         }
 
         public async Task<LivroResponse> ObterLivro(int codigo, CancellationToken cancellationToken = default)
         {
-            var registro = await _context.Livros.FirstOrDefaultAsync(q => q.Codl == codigo, cancellationToken);
+            var registro = await _context.Livros
+                .Include(i => i.LivroAssuntos).ThenInclude(i => i.Assunto)
+                .Include(i => i.LivroAutores).ThenInclude(i => i.Autor)
+                .FirstOrDefaultAsync(q => q.Codl == codigo, cancellationToken);
+
             if (registro == null)
                 throw new BusinessException("Registro não encontrado!", "LIVRO_NAO_ENCONTRADO", StatusCodes.Status404NotFound);
 
-            return new LivroResponse(registro.Codl, registro.Titulo, registro.Editora, registro.Edicao, registro.AnoPublicacao, registro.Valor);
+            var retorno = new LivroResponse(registro.Codl, registro.Titulo, registro.Editora, registro.Edicao, registro.AnoPublicacao, registro.Valor);
+
+            retorno.Autores = registro.LivroAutores.Select(q => new AutorResponse(q.Autor.CodAu, q.Autor.Nome)).ToList();
+            retorno.Assuntos = registro.LivroAssuntos.Select(q => new AssuntoResponse(q.Assunto.CodAs, q.Assunto.Descricao)).ToList();
+
+            return retorno;
         }
 
-        public async Task<LivroResponse> CriarLivro(LivroRequest request, CancellationToken cancellationToken = default)
+        public async Task<int> CriarLivro(LivroRequest request, CancellationToken cancellationToken = default)
         {
             var registroDuplicado = await _context.Livros.FirstOrDefaultAsync(q => q.Titulo.Trim().ToUpper() == request.Titulo.Trim().ToUpper(), cancellationToken);
             if (registroDuplicado != null)
                 throw new BusinessException("Livro já cadastrado!", "LIVRO_DUPLICADO", StatusCodes.Status400BadRequest);
 
+            // Livro
             var entidade = new Domain.Entities.Livro
             {
                 Titulo = request.Titulo.Trim(),
                 Editora = request.Editora,
                 Edicao = request.Edicao,
                 AnoPublicacao = request.AnoPublicacao,
-                Valor = request.Valor
+                Valor = request.Valor,
+                LivroAutores = new List<LivroAutor>(),
+                LivroAssuntos = new List<LivroAssunto>(),
             };
+
+            // Autores
+            var autores = await _context.Autores.Where(q => request.CodigosAutores.Contains(q.CodAu)).ToListAsync();
+            autores.ForEach(a => entidade.LivroAutores.Add(new Domain.Entities.LivroAutor()
+            {
+                Autor = a,
+                Livro = entidade
+            }));
+
+            // Assuntos
+            var assuntos = await _context.Assuntos.Where(q => request.CodigosAssuntos.Contains(q.CodAs)).ToListAsync();
+            assuntos.ForEach(a => entidade.LivroAssuntos.Add(new Domain.Entities.LivroAssunto()
+            {
+                Assunto = a,
+                Livro = entidade
+            }));
 
             await _context.Livros.AddAsync(entidade, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
 
-            return new LivroResponse(entidade.Codl, entidade.Titulo, entidade.Editora, entidade.Edicao, entidade.AnoPublicacao, entidade.Valor);
+            return entidade.Codl;
         }
-        public async Task<LivroResponse> AlterarLivro(int codigo, LivroRequest request, CancellationToken cancellationToken = default)
+        public async Task<int> AlterarLivro(int codigo, LivroRequest request, CancellationToken cancellationToken = default)
         {
             var registroDuplicado = await _context.Livros.FirstOrDefaultAsync(q => q.Titulo.Trim().ToUpper() == request.Titulo.Trim().ToUpper() && q.Codl != codigo, cancellationToken);
             if (registroDuplicado != null)
                 throw new BusinessException("Livro já cadastrado!", "LIVRO_DUPLICADO", StatusCodes.Status400BadRequest);
 
-            var registro = await _context.Livros.FirstOrDefaultAsync(q => q.Codl == codigo, cancellationToken);
+            var registro = await _context.Livros
+                .Include(i => i.LivroAssuntos).ThenInclude(i => i.Assunto)
+                .Include(i => i.LivroAutores).ThenInclude(i => i.Autor)
+                .FirstOrDefaultAsync(q => q.Codl == codigo, cancellationToken);
             if (registro == null)
                 throw new BusinessException("Registro não encontrado!", "LIVRO_NAO_ENCONTRADO", StatusCodes.Status404NotFound);
 
+            // Livro
             registro.Titulo = request.Titulo.Trim();
             registro.Editora = request.Editora;
             registro.Edicao = request.Edicao;
             registro.AnoPublicacao = request.AnoPublicacao;
             registro.Valor = request.Valor;
 
+            // Autores
+            registro.LivroAutores.Clear();
+            var autores = await _context.Autores.Where(q => request.CodigosAutores.Contains(q.CodAu)).ToListAsync();
+            autores.ForEach(a => registro.LivroAutores.Add(new Domain.Entities.LivroAutor()
+            {
+                Autor = a,
+                Livro = registro
+            }));
+
+            // Assuntos
+            registro.LivroAssuntos.Clear();
+            var assuntos = await _context.Assuntos.Where(q => request.CodigosAssuntos.Contains(q.CodAs)).ToListAsync();
+            assuntos.ForEach(a => registro.LivroAssuntos.Add(new Domain.Entities.LivroAssunto()
+            {
+                Assunto = a,
+                Livro = registro
+            }));
+
             await _context.SaveChangesAsync(cancellationToken);
 
-            return new LivroResponse(registro.Codl, registro.Titulo, registro.Editora, registro.Edicao, registro.AnoPublicacao, registro.Valor);
+            return registro.Codl;
         }
 
         public async Task ExcluirLivro(int codigo, CancellationToken cancellationToken = default)
