@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TesteTecFullstackAngular.Api.Core;
 using TesteTecFullstackAngular.Api.Infra;
 using TesteTecFullstackAngular.Api.Infra.ORM;
 
@@ -31,7 +32,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.MapControllers();
 
