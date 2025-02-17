@@ -35,4 +35,11 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// aplica as migrations no startup da Api
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<DefaultContext>();
+    await db.Database.MigrateAsync();
+}
+
 app.Run();
