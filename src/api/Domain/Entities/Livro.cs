@@ -7,6 +7,7 @@
         public string Editora { get; set; }
         public int Edicao { get; set; }
         public string AnoPublicacao { get; set; }
+        public decimal Valor { get; set; }
 
         public virtual ICollection<LivroAutor> LivroAutores { get; set; }
         public virtual ICollection<LivroAssunto> LivroAssuntos { get; set; }
