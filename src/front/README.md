@@ -1,5 +1,6 @@
-### Comandos utilizados para criação do front
+## Comandos utilizados para criação do front
 
+### Iniciais
 ```
 npm install -g @angular/cli
 ng new biblioteca --defaults
@@ -10,4 +11,10 @@ ng generate component components/assunto --standalone
 ng generate service services/livro
 ng generate service services/autor
 ng generate service services/assunto
+```
+
+### Apoio a construção das telas
+```
+npm install bootstrap
+npm install @popperjs/core
 ```

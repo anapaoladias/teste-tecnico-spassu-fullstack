@@ -1,1 +1,108 @@
-<p>autor works!</p>
+<div class="container mt-4">
+    <!-- Título da página -->
+    <h2>Gestão de Autores</h2>
+
+    <!-- Botão Novo Autor -->
+    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#novoAutorModal">
+        Novo Autor
+    </button>
+
+    <!-- Lista de Autores -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nome</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Iterar pela lista de autores -->
+            <tr *ngFor="let autor of autores">
+                <td>{{ autor.codigo }}</td>
+                <td>{{ autor.nome }}</td>
+                <td>
+                    <!-- Botão Editar -->
+                    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editarAutorModal"
+                        (click)="abrirModalEditar(autor)">
+                        Editar
+                    </button>
+                    <!-- Botão Excluir -->
+                    <button class="btn btn-danger" (click)="confirmarExclusao(autor.codigo)">
+                        Excluir
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Modal para Novo Autor -->
+    <div class="modal fade" id="novoAutorModal" tabindex="-1" aria-labelledby="novoAutorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="novoAutorModalLabel">Novo Autor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- <form (ngSubmit)="criarAutor()">
+                        <div class="mb-3">
+                            <label for="nome" class="form-label">Nome</label>
+                            <input type="text" class="form-control" id="nome" [(ngModel)]="autor.nome" name="nome"
+                                required maxlength="40">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </form> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Editar Autor -->
+    <div class="modal fade" id="editarAutorModal" tabindex="-1" aria-labelledby="editarAutorModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarAutorModalLabel">Editar Autor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- <form (ngSubmit)="atualizarAutor()">
+                        <div class="mb-3">
+                            <label for="nome" class="form-label">Nome</label>
+                            <input type="text" class="form-control" id="nome" [(ngModel)]="autor.nome" name="nome"
+                                required maxlength="40">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                    </form> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação de Exclusão -->
+    <div class="modal fade" id="confirmarExclusaoModal" tabindex="-1" aria-labelledby="confirmarExclusaoModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmarExclusaoModalLabel">Confirmar Exclusão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Tem certeza que deseja excluir este autor?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" (click)="excluirAutor()">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mensagens de Sucesso -->
+    <div *ngIf="mensagemSucesso" class="alert alert-success mt-3" role="alert">
+        {{ mensagemSucesso }}
+    </div>
+</div>
