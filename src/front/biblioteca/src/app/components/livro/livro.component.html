@@ -1,6 +1,134 @@
-<h2>Lista de Livros</h2>
-<ul>
-  <li *ngFor="let livro of livros">
-    {{ livro.titulo }} - {{ livro.editora }} ({{ livro.anoPublicacao }})
-  </li>
-</ul>
+<div class="container mt-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Livros</h2>
+    <button class="btn btn-primary" (click)="openModal(modalNovo)">
+      Novo
+    </button>
+  </div>
+
+  <div *ngIf="mostrarAlertSucesso" class="alert alert-success mt-3" role="alert">
+    {{ mensagemSucesso }}
+  </div>
+
+  <div *ngIf="mostrarAlertErro" class="alert alert-danger mt-3" role="alert">
+    {{ mensagemErro }}
+  </div>
+
+  <hr />
+
+  <!-- Lista -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th class="codigo">Código</th>
+        <th>Título</th>
+        <th>Editora</th>
+        <th>Edição</th>
+        <th>Ano de Publicação</th>
+        <th>Valor</th>
+        <th class="acoes">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let livro of livros">
+        <td>#{{ livro.codigo }}</td>
+        <td>{{ livro.titulo }}</td>
+        <td>{{ livro.editora }}</td>
+        <td>{{ livro.edicao }}</td>
+        <td>{{ livro.anoPublicacao }}</td>
+        <td>R${{ livro.valor.toString().replace(".", ",") }}</td>
+        <td class="text-end">
+          <button class="btn btn-warning me-2" (click)="abrirModalEditar(livro, modalEdicao)">
+            Editar
+          </button>
+          <button class="btn btn-danger" (click)="confirmarExclusao(livro.codigo)">
+            Excluir
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal Novo -->
+  <ng-template #modalNovo let-modal>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="novoModalLabel">Novo Livro</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="criarRegistro()">
+          <div class="mb-3">
+            <label for="titulo" class="form-label">Título</label>
+            <input type="text" class="form-control" id="titulo" [(ngModel)]="livro.titulo" name="titulo" required
+              maxlength="20" ngbAutofocus>
+          </div>
+          <div class="mb-3">
+            <label for="editora" class="form-label">Editora</label>
+            <input type="text" class="form-control" id="editora" [(ngModel)]="livro.editora" name="editora" required
+              maxlength="20" ngbAutofocus>
+          </div>
+          <div class="mb-3">
+            <label for="edicao" class="form-label">Edição</label>
+            <input type="text" class="form-control" id="edicao" [(ngModel)]="livro.edicao" name="edicao" required
+              maxlength="20" ngbAutofocus>
+          </div>
+          <div class="mb-3">
+            <label for="ano" class="form-label">Ano de Publicação</label>
+            <input type="text" class="form-control" id="ano" [(ngModel)]="livro.anoPublicacao" name="ano" required
+              maxlength="20" ngbAutofocus>
+          </div>
+          <div class="mb-3">
+            <label for="valor" class="form-label">Valor</label>
+            <input type="text" class="form-control" id="valor" [(ngModel)]="livro.valor" name="valor" required
+              maxlength="20" ngbAutofocus>
+          </div>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+
+
+  <!-- Modal Edicao -->
+  <ng-template #modalEdicao let-modal>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editarModalLabel">Editar Livro</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="atualizarRegistro()">
+          <div class="mb-3">
+            <label for="titulo" class="form-label">Título</label>
+            <input type="text" class="form-control" id="titulo" [(ngModel)]="livro.titulo" name="titulo" required
+              maxlength="20" ngbAutofocus>
+          </div>
+          <div class="mb-3">
+            <label for="editora" class="form-label">Editora</label>
+            <input type="text" class="form-control" id="editora" [(ngModel)]="livro.editora" name="editora" required
+              maxlength="20" ngbAutofocus>
+          </div>
+          <div class="mb-3">
+            <label for="edicao" class="form-label">Edição</label>
+            <input type="text" class="form-control" id="edicao" [(ngModel)]="livro.edicao" name="edicao" required
+              maxlength="20" ngbAutofocus>
+          </div>
+          <div class="mb-3">
+            <label for="ano" class="form-label">Ano de Publicação</label>
+            <input type="text" class="form-control" id="ano" [(ngModel)]="livro.anoPublicacao" name="ano" required
+              maxlength="20" ngbAutofocus>
+          </div>
+          <div class="mb-3">
+            <label for="valor" class="form-label">Valor</label>
+            <input type="text" class="form-control" id="valor" [(ngModel)]="livro.valor" name="valor" required
+              maxlength="20" ngbAutofocus>
+          </div>
+          <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+
+</div>
