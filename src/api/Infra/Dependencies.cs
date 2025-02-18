@@ -14,6 +14,7 @@ namespace TesteTecFullstackAngular.Api.Infra
 
             // services
             builder.Services.AddTransient<IBibliotecaService, BibliotecaService>();
+            builder.Services.AddTransient<IRelatoriosService, RelatoriosService>();
         }
     }
 }

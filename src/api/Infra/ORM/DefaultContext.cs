@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using TesteTecFullstackAngular.Api.Domain.Entities;
+using TesteTecFullstackAngular.Api.Domain.Views;
 
 namespace TesteTecFullstackAngular.Api.Infra.ORM
 {
@@ -9,6 +10,7 @@ namespace TesteTecFullstackAngular.Api.Infra.ORM
         public DbSet<Livro> Livros { get; set; }
         public DbSet<Assunto> Assuntos { get; set; }
         public DbSet<Autor> Autores { get; set; }
+        public DbSet<LivrosListaCompletaView> LivrosListaCompletaView { get; set; }
 
         public DefaultContext(DbContextOptions<DefaultContext> options) : base(options)
         {

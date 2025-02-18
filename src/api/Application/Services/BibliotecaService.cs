@@ -7,6 +7,7 @@ using TesteTecFullstackAngular.Api.Infra.ORM;
 
 namespace TesteTecFullstackAngular.Api.Application.Services
 {
+
     public class BibliotecaService : IBibliotecaService
     {
         private readonly DefaultContext _context;
