@@ -31,6 +31,9 @@
 ![image](https://github.com/user-attachments/assets/0b6fc7b8-72bb-4698-b534-fba68eb2ca79)
 
 ### Front
+
+- Telas
+
 ![image](https://github.com/user-attachments/assets/9afc34a8-bb0e-44fb-9b33-e0ccd82e8ea0)
 
 ![image](https://github.com/user-attachments/assets/4e002586-c329-44b4-8ba9-142e0f801a90)
@@ -40,3 +43,6 @@
 ![image](https://github.com/user-attachments/assets/bd851b91-b54b-47de-b424-25d2c42b5622)
 
 ![image](https://github.com/user-attachments/assets/779603cb-f85c-49ba-890e-8d29f2814d0a)
+
+- Relatório
+![image](https://github.com/user-attachments/assets/b1572602-9c22-48df-8342-1e0ac7aa548b)
