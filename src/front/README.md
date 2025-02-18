@@ -17,4 +17,5 @@ ng generate service services/assunto
 ```
 npm install bootstrap
 npm install @popperjs/core
+ng add @ng-bootstrap/ng-bootstrap
 ```
