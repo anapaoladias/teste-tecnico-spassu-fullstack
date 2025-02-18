@@ -86,7 +86,7 @@ export class AutorComponent implements OnInit {
 
   tratarMsgSucesso(msg: string) {
     this.autor = { codigo: 0, nome: '' };
-    this.mensagemSucesso = 'Registro criado com sucesso!';
+    this.mensagemSucesso = msg;
     this.mostrarAlertSucesso = true;
     this.mostrarAlertErro = false;
     this.mensagemErro = '';

@@ -1,6 +1,86 @@
-<h2>Lista</h2>
-<ul>
-    <li *ngFor="let item of assuntos">
-        {{ item.codigo }} - {{ item.descricao }}
-    </li>
-</ul>
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Assuntos</h2>
+        <button class="btn btn-primary" (click)="openModal(modalNovo)">
+            Novo
+        </button>
+    </div>
+
+    <div *ngIf="mostrarAlertSucesso" class="alert alert-success mt-3" role="alert">
+        {{ mensagemSucesso }}
+    </div>
+
+    <div *ngIf="mostrarAlertErro" class="alert alert-danger mt-3" role="alert">
+        {{ mensagemErro }}
+    </div>
+
+    <hr />
+
+    <!-- Lista -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="codigo">Código</th>
+                <th>Nome</th>
+                <th class="acoes">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let assunto of assuntos">
+                <td>#{{ assunto.codigo }}</td>
+                <td>{{ assunto.descricao }}</td>
+                <td class="text-end">
+                    <button class="btn btn-warning me-2" (click)="abrirModalEditar(assunto, modalEdicao)">
+                        Editar
+                    </button>
+                    <button class="btn btn-danger" (click)="confirmarExclusao(assunto.codigo)">
+                        Excluir
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Modal Novo -->
+    <ng-template #modalNovo let-modal>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="novoassuntoModalLabel">Novo Assunto</h5>
+                <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="criarRegistro()">
+                    <div class="mb-3">
+                        <label for="descricao" class="form-label">Descrição</label>
+                        <input type="text" class="form-control" id="descricao" [(ngModel)]="assunto.descricao"
+                            name="descricao" required maxlength="20" ngbAutofocus>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </form>
+            </div>
+        </div>
+    </ng-template>
+
+
+    <!-- Modal Edicao -->
+    <ng-template #modalEdicao let-modal>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editarassuntoModalLabel">Editar assunto</h5>
+                <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="atualizarRegistro()">
+                    <div class="mb-3">
+                        <label for="descricao" class="form-label">Descrição</label>
+                        <input type="text" class="form-control" id="descricao" [(ngModel)]="assunto.descricao"
+                            name="descricao" required maxlength="20" ngbAutofocus>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                </form>
+            </div>
+        </div>
+    </ng-template>
+
+</div>
