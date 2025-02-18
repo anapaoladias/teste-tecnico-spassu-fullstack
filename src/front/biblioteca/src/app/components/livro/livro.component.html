@@ -22,10 +22,8 @@
     <thead>
       <tr>
         <th class="codigo">Código</th>
-        <th>Título</th>
-        <th>Editora</th>
-        <th>Edição</th>
-        <th>Ano de Publicação</th>
+        <th class="titulo">Título</th>
+        <th>Detalhes</th>
         <th>Valor</th>
         <th class="acoes">Ações</th>
       </tr>
@@ -34,9 +32,19 @@
       <tr *ngFor="let livro of livros">
         <td>#{{ livro.codigo }}</td>
         <td>{{ livro.titulo }}</td>
-        <td>{{ livro.editora }}</td>
-        <td>{{ livro.edicao }}</td>
-        <td>{{ livro.anoPublicacao }}</td>
+        <td>
+          Editora: {{ livro.editora }} / Edição: {{ livro.edicao }} de {{ livro.anoPublicacao }}
+          <br />
+          Autores:
+          <span *ngFor="let autor of livro.autores; let isLast = last">
+            {{ autor.nome }}<span *ngIf="!isLast">, </span>
+          </span>
+          <br />
+          Assuntos:
+          <span *ngFor="let assunto of livro.assuntos; let isLast = last">
+            {{ assunto.descricao }}<span *ngIf="!isLast">, </span>
+          </span>
+        </td>
         <td>R${{ livro.valor.toString().replace(".", ",") }}</td>
         <td class="text-end">
           <button class="btn btn-warning me-2" (click)="abrirModalEditar(livro, modalEdicao)">
@@ -62,12 +70,12 @@
           <div class="mb-3">
             <label for="titulo" class="form-label">Título</label>
             <input type="text" class="form-control" id="titulo" [(ngModel)]="livro.titulo" name="titulo" required
-              maxlength="20" ngbAutofocus>
+              maxlength="40" ngbAutofocus>
           </div>
           <div class="mb-3">
             <label for="editora" class="form-label">Editora</label>
             <input type="text" class="form-control" id="editora" [(ngModel)]="livro.editora" name="editora" required
-              maxlength="20" ngbAutofocus>
+              maxlength="40" ngbAutofocus>
           </div>
           <div class="mb-3">
             <label for="edicao" class="form-label">Edição</label>
@@ -77,7 +85,7 @@
           <div class="mb-3">
             <label for="ano" class="form-label">Ano de Publicação</label>
             <input type="text" class="form-control" id="ano" [(ngModel)]="livro.anoPublicacao" name="ano" required
-              maxlength="20" ngbAutofocus>
+              maxlength="4" ngbAutofocus>
           </div>
           <div class="mb-3">
             <label for="valor" class="form-label">Valor</label>
@@ -115,12 +123,12 @@
           <div class="mb-3">
             <label for="titulo" class="form-label">Título</label>
             <input type="text" class="form-control" id="titulo" [(ngModel)]="livro.titulo" name="titulo" required
-              maxlength="20" ngbAutofocus>
+              maxlength="40" ngbAutofocus>
           </div>
           <div class="mb-3">
             <label for="editora" class="form-label">Editora</label>
             <input type="text" class="form-control" id="editora" [(ngModel)]="livro.editora" name="editora" required
-              maxlength="20">
+              maxlength="40">
           </div>
           <div class="mb-3">
             <label for="edicao" class="form-label">Edição</label>
@@ -130,7 +138,7 @@
           <div class="mb-3">
             <label for="ano" class="form-label">Ano de Publicação</label>
             <input type="text" class="form-control" id="ano" [(ngModel)]="livro.anoPublicacao" name="ano" required
-              maxlength="20">
+              maxlength="4">
           </div>
           <div class="mb-3">
             <label for="valor" class="form-label">Valor</label>
