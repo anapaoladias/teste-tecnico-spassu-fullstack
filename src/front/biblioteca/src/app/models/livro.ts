@@ -1,3 +1,6 @@
+import { Assunto } from "./assunto";
+import { Autor } from "./autor";
+
 export class Livro {
     codigo: number;
     titulo: string;
@@ -5,6 +8,8 @@ export class Livro {
     edicao: number;
     anoPublicacao: string;
     valor: number;
+    assuntos: Assunto[] = [];
+    autores: Autor[] = [];
 
     constructor(
         codigo: number = 0,

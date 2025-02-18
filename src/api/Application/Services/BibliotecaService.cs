@@ -159,7 +159,7 @@ namespace TesteTecFullstackAngular.Api.Application.Services
 
             var retorno = new List<LivroResponse>();
 
-            foreach(var r in registros)
+            foreach (var r in registros)
             {
                 var livro = new LivroResponse(r.Codl, r.Titulo, r.Editora, r.Edicao, r.AnoPublicacao, r.Valor);
 
@@ -209,7 +209,7 @@ namespace TesteTecFullstackAngular.Api.Application.Services
             };
 
             // Autores
-            var autores = await _context.Autores.Where(q => request.CodigosAutores.Contains(q.CodAu)).ToListAsync();
+            var autores = await _context.Autores.Where(q => request.Autores.Select(q => q.Codigo).Contains(q.CodAu)).ToListAsync();
             autores.ForEach(a => entidade.LivroAutores.Add(new Domain.Entities.LivroAutor()
             {
                 Autor = a,
@@ -217,7 +217,7 @@ namespace TesteTecFullstackAngular.Api.Application.Services
             }));
 
             // Assuntos
-            var assuntos = await _context.Assuntos.Where(q => request.CodigosAssuntos.Contains(q.CodAs)).ToListAsync();
+            var assuntos = await _context.Assuntos.Where(q => request.Assuntos.Select(q => q.Codigo).Contains(q.CodAs)).ToListAsync();
             assuntos.ForEach(a => entidade.LivroAssuntos.Add(new Domain.Entities.LivroAssunto()
             {
                 Assunto = a,
@@ -251,7 +251,7 @@ namespace TesteTecFullstackAngular.Api.Application.Services
 
             // Autores
             registro.LivroAutores.Clear();
-            var autores = await _context.Autores.Where(q => request.CodigosAutores.Contains(q.CodAu)).ToListAsync();
+            var autores = await _context.Autores.Where(q => request.Autores.Select(q => q.Codigo).Contains(q.CodAu)).ToListAsync();
             autores.ForEach(a => registro.LivroAutores.Add(new Domain.Entities.LivroAutor()
             {
                 Autor = a,
@@ -260,7 +260,7 @@ namespace TesteTecFullstackAngular.Api.Application.Services
 
             // Assuntos
             registro.LivroAssuntos.Clear();
-            var assuntos = await _context.Assuntos.Where(q => request.CodigosAssuntos.Contains(q.CodAs)).ToListAsync();
+            var assuntos = await _context.Assuntos.Where(q => request.Assuntos.Select(q => q.Codigo).Contains(q.CodAs)).ToListAsync();
             assuntos.ForEach(a => registro.LivroAssuntos.Add(new Domain.Entities.LivroAssunto()
             {
                 Assunto = a,

@@ -3,22 +3,30 @@ import { LivroService } from '../../services/livro.service';
 import { AutorService } from '../../services/autor.service';
 import { AssuntoService } from '../../services/assunto.service';
 import { Livro } from '../../models/livro';
+import { Autor } from '../../models/autor';
+import { Assunto } from '../../models/assunto';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectComponent } from '@ng-select/ng-select';
 
 
 @Component({
   selector: 'app-livro',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, FormsModule],
+  imports: [CommonModule, HttpClientModule, FormsModule, NgSelectComponent],
   providers: [LivroService, AssuntoService, AutorService],
   templateUrl: './livro.component.html'
 })
 export class LivroComponent implements OnInit {
   livros: Livro[] = [];
   livro = new Livro();
+  autores: Autor[] = [];
+  assuntos: Assunto[] = [];
+  autoresSelecionados: number[] = [];
+  assuntosSelecionados: number[] = [];
+
   mostrarModalNova = false;
   mostrarAlertSucesso = false;
   mostrarAlertErro = false;
@@ -32,6 +40,9 @@ export class LivroComponent implements OnInit {
     private modalService: NgbModal) { }
 
   ngOnInit() {
+    this.autorService.getAutores().subscribe(data => { this.autores = data; });
+    this.assuntoService.getAssuntos().subscribe(data => { this.assuntos = data; });
+
     this.obterLista();
   }
 
@@ -47,11 +58,16 @@ export class LivroComponent implements OnInit {
 
   abrirModalEditar(livro: any, modal: TemplateRef<any>) {
     this.livro = { ...livro };
+    this.assuntosSelecionados = this.livro.assuntos.map(a => a.codigo);
+    this.autoresSelecionados = this.livro.autores.map(a => a.codigo);
     this.openModal(modal);
   }
 
   criarRegistro() {
     this.livro.valor = parseFloat(this.livro.valor.toString().replace(",", "."));
+
+    this.livro.assuntos = this.assuntosSelecionados.map(a => new Assunto(a, ''))
+    this.livro.autores = this.autoresSelecionados.map(a => new Autor(a, ''))
 
     this.livroService.addLivro(this.livro).subscribe(
       (registro) => {
@@ -64,8 +80,10 @@ export class LivroComponent implements OnInit {
   }
 
   atualizarRegistro() {
-    console.log(this.livro.valor.toString());
     this.livro.valor = parseFloat(this.livro.valor.toString().replace(",", "."));
+
+    this.livro.assuntos = this.assuntosSelecionados.map(a => new Assunto(a, ''))
+    this.livro.autores = this.autoresSelecionados.map(a => new Autor(a, ''))
 
     this.livroService.alterLivro(this.livro.codigo, this.livro).subscribe(
       (registro) => {
@@ -97,6 +115,8 @@ export class LivroComponent implements OnInit {
 
   tratarMsgSucesso(msg: string) {
     this.livro = new Livro();
+    this.assuntosSelecionados = [];
+    this.autoresSelecionados = [];
     this.mensagemSucesso = msg;
     this.mostrarAlertSucesso = true;
     this.mostrarAlertErro = false;

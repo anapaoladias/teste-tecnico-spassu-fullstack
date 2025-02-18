@@ -82,7 +82,19 @@
           <div class="mb-3">
             <label for="valor" class="form-label">Valor</label>
             <input type="text" class="form-control" id="valor" [(ngModel)]="livro.valor" name="valor" required
-              maxlength="20" ngbAutofocus>
+              maxlength="10">
+          </div>
+          <div class="mb-3">
+            <label for="autores" class="form-label">Autores</label>
+            <ng-select name="autore" [items]="autores" bindLabel="nome" bindValue="codigo"
+              [(ngModel)]="autoresSelecionados" multiple="true">
+            </ng-select>
+          </div>
+          <div class="mb-3">
+            <label for="assuntos" class="form-label">Assuntos</label>
+            <ng-select name="assuntos" [items]="assuntos" bindLabel="descricao" bindValue="codigo"
+              [(ngModel)]="assuntosSelecionados" multiple="true">
+            </ng-select>
           </div>
           <button type="submit" class="btn btn-primary">Salvar</button>
         </form>
@@ -108,22 +120,34 @@
           <div class="mb-3">
             <label for="editora" class="form-label">Editora</label>
             <input type="text" class="form-control" id="editora" [(ngModel)]="livro.editora" name="editora" required
-              maxlength="20" ngbAutofocus>
+              maxlength="20">
           </div>
           <div class="mb-3">
             <label for="edicao" class="form-label">Edição</label>
             <input type="text" class="form-control" id="edicao" [(ngModel)]="livro.edicao" name="edicao" required
-              maxlength="20" ngbAutofocus>
+              maxlength="20">
           </div>
           <div class="mb-3">
             <label for="ano" class="form-label">Ano de Publicação</label>
             <input type="text" class="form-control" id="ano" [(ngModel)]="livro.anoPublicacao" name="ano" required
-              maxlength="20" ngbAutofocus>
+              maxlength="20">
           </div>
           <div class="mb-3">
             <label for="valor" class="form-label">Valor</label>
             <input type="text" class="form-control" id="valor" [(ngModel)]="livro.valor" name="valor" required
-              maxlength="20" ngbAutofocus>
+              maxlength="10">
+          </div>
+          <div class="mb-3">
+            <label for="autores" class="form-label">Autores</label>
+            <ng-select name="autore" [items]="autores" bindLabel="nome" bindValue="codigo"
+              [(ngModel)]="autoresSelecionados" multiple="true">
+            </ng-select>
+          </div>
+          <div class="mb-3">
+            <label for="assuntos" class="form-label">Assuntos</label>
+            <ng-select name="assuntos" [items]="assuntos" bindLabel="descricao" bindValue="codigo"
+              [(ngModel)]="assuntosSelecionados" multiple="true">
+            </ng-select>
           </div>
           <button type="submit" class="btn btn-primary">Salvar Alterações</button>
         </form>
