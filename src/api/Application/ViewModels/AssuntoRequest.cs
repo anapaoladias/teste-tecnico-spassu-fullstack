@@ -12,8 +12,8 @@ namespace TesteTecFullstackAngular.Api.Application.ViewModels
         public AssuntoRequestValidator()
         {
             RuleFor(x => x.Descricao)
-                .NotEmpty().WithMessage("A descrição não pode estar vazia.")
-                .MaximumLength(20).WithMessage("A descrição deve ter no máximo 20 caracteres.");
+                .NotEmpty().WithMessage("A Descrição é obrigatória")
+                .MaximumLength(20).WithMessage("A Descrição deve ter no máximo 20 caracteres.");
         }
     }
 }

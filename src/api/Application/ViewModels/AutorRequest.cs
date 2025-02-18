@@ -12,8 +12,8 @@ namespace TesteTecFullstackAngular.Api.Application.ViewModels
         public AutorRequestValidator()
         {
             RuleFor(x => x.Nome)
-                .NotEmpty().WithMessage("O Nome não pode estar vazia.")
-                .MaximumLength(20).WithMessage("O Nome deve ter no máximo 40 caracteres.");
+                .NotEmpty().WithMessage("O Nome é obrigatório.")
+                .MaximumLength(40).WithMessage("O Nome deve ter no máximo 40 caracteres.");
         }
     }
 }
