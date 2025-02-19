@@ -10,16 +10,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectComponent } from '@ng-select/ng-select';
-
+import { MascaraMoedaDirective } from '../../mascara-moeda.directive';
 
 @Component({
   selector: 'app-livro',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, FormsModule, NgSelectComponent],
+  imports: [CommonModule, HttpClientModule, FormsModule, NgSelectComponent, MascaraMoedaDirective],
   providers: [LivroService, AssuntoService, AutorService],
   templateUrl: './livro.component.html'
 })
 export class LivroComponent implements OnInit {
+  //valor: number = 0;
+
   livros: Livro[] = [];
   livro = new Livro();
   autores: Autor[] = [];
@@ -64,6 +66,7 @@ export class LivroComponent implements OnInit {
   }
 
   criarRegistro() {
+    console.log(this.livro.valor);
     this.livro.valor = parseFloat(this.livro.valor.toString().replace(",", "."));
 
     this.livro.assuntos = this.assuntosSelecionados.map(a => new Assunto(a, ''))

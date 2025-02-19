@@ -1,0 +1,33 @@
+@media print {
+    .table {
+        width: 100%;
+        margin-bottom: 1rem;
+        page-break-inside: auto;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    tfoot {
+        display: table-footer-group;
+    }
+}
+
+.author-row {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.book-row {
+    background-color: #ffffff;
+}
+
+.book-row td:first-child {
+    padding-left: 2rem;
+}
