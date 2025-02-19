@@ -43,6 +43,7 @@ namespace TesteTecFullstackAngular.Api.Application.Services
                         Edicao = livroGrupo.First().Edicao,
                         AnoPublicacao = livroGrupo.First().AnoPublicacao,
                         Valor = livroGrupo.First().Valor,
+                        // Formata em uma linha só os assuntos, separados por virgula
                         Assuntos = string.Join(", ", livroGrupo.Select(l => l.Assunto).Distinct())
                     }).ToList()
                 }).ToList();
