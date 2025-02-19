@@ -7,6 +7,7 @@
       <table class="table table-bordered">
         <thead class="table-dark">
           <tr>
+            <td></td>
             <th>Título</th>
             <th>Editora</th>
             <th>Edição</th>
@@ -16,19 +17,25 @@
           </tr>
         </thead>
         <tbody>
+          @for (rel of relatorio; track $index){
           <!--Agrupamento por Autor-->
-          <tr class="author-row">
-            <td colspan="6">..</td>
+          <tr class="table-secondary">
+            <td colspan="7"> {{ rel.autor }} </td>
           </tr>
+
+          @for (item of rel?.livros; track $index){
           <!--Livros do Autor-->
           <tr class="book-row">
-            <td>..</td>
-            <td>..</td>
-            <td>..</td>
-            <td>..</td>
-            <td>..</td>
-            <td>..</td>
+            <td></td>
+            <td>{{ item.titulo }}</td>
+            <td>{{ item.editora }}</td>
+            <td>{{ item.edicao }}</td>
+            <td>{{ item.anoPublicacao }}</td>
+            <td>{{ item.valor }}</td>
+            <td>{{ item.assuntos }}</td>
           </tr>
+          }
+          }
 
         </tbody>
       </table>
