@@ -46,5 +46,6 @@
 
 - Relatório
 ![image](https://github.com/user-attachments/assets/b1572602-9c22-48df-8342-1e0ac7aa548b)
-![image](https://github.com/user-attachments/assets/44e833f3-24d1-4aaa-baa2-e9a44b0f7947)
+![image](https://github.com/user-attachments/assets/32667365-4e34-4834-a22f-af81dde9cb24)
+
 
